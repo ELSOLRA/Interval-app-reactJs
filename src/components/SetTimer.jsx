@@ -54,14 +54,14 @@ export default function SetTimer() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    navigate("/analog-timer");
+    navigate("/analog");
   };
 
   const decreaseMinutes = () => setMinutes((prev) => Math.max(1, prev - 1));
   const increaseMinutes = () => setMinutes((prev) => prev + 1);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-200 px-4 mx-auto max-w-sm sm:max-w-sm md:max-w-md">
+    <div className="flex flex-col items-center justify-center min-h-screen px-8 mx-auto max-w-sm sm:max-w-sm md:max-w-md shadow-lg">
       <form
         onSubmit={handleSubmit}
         className="w-full max-w-sm flex flex-col gap-8 mb-24">
