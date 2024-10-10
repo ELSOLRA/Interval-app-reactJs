@@ -6,7 +6,7 @@ export default function Loading() {
     <div className="flex flex-col items-center justify-center min-h-screen bg-black px-4 mx-auto max-w-xs sm:max-w-sm md:max-w-md">
       <Link to="/set-timer" className="">
         <img
-          src="/loading.svg"
+          src="/src/assets/loading.svg"
           alt="Logo"
           className="w-28 h-16 animate-pulse-scale"
         />

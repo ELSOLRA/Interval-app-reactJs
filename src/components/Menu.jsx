@@ -11,9 +11,13 @@ export default function Menu() {
         onClick={() => setIsOpen(!isOpen)}
         aria-label={isOpen ? "Close menu" : "Open menu"}>
         {isOpen ? (
-          <img src="/menuclose.svg" alt="Close Menu" className="w-8 h-8" />
+          <img
+            src="/src/assets/menuclose.svg"
+            alt="Close Menu"
+            className="w-8 h-8"
+          />
         ) : (
-          <img src="/menu.svg" alt="Open Menu" className="w-8 h-8" />
+          <img src="/src/assets/menu.svg" alt="Open Menu" className="w-8 h-8" />
         )}
       </button>
 

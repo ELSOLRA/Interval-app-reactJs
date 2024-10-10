@@ -12,7 +12,11 @@ const CustomCheckbox = ({ checked, onChange, label }) => (
       />
       <div className="w-6 h-6">
         <img
-          src={checked ? "/checkedbox.svg" : "/uncheckedbox.svg"}
+          src={
+            checked
+              ? "/src/assets/checkedbox.svg"
+              : "/src/assets/uncheckedbox.svg"
+          }
           alt={checked ? "Checked" : "Unchecked"}
           className="w-full h-full"
         />
