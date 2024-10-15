@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React /* , { useState } */ from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { setTimerSettings } from "../redux/timerSlice";
 
 const CustomCheckbox = ({ checked, onChange, label }) => (
   <label className="flex items-center cursor-pointer">
@@ -51,9 +53,13 @@ const ArrowButton = ({ onClick, direction, label }) => (
 );
 
 export default function SetTimer() {
-  const [minutes, setMinutes] = useState(10);
-  const [intervals, setIntervals] = useState(1);
-  const [pauseBetweenIntervals, setPauseBetweenIntervals] = useState(false);
+  // const [minutes, setMinutes] = useState(10);
+  const dispatch = useDispatch();
+  const { minutes, intervals, pauseBetweenIntervals } = useSelector(
+    (state) => state.timer
+  );
+  /*   const [intervals, setIntervals] = useState(1);
+  const [pauseBetweenIntervals, setPauseBetweenIntervals] = useState(false); */
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
@@ -61,8 +67,20 @@ export default function SetTimer() {
     navigate("/analog");
   };
 
-  const decreaseMinutes = () => setMinutes((prev) => Math.max(1, prev - 1));
-  const increaseMinutes = () => setMinutes((prev) => prev + 1);
+  /*   const decreaseMinutes = () => setMinutes((prev) => Math.max(1, prev - 1));
+  const increaseMinutes = () => setMinutes((prev) => prev + 1); */
+  const decreaseMinutes = () =>
+    dispatch(setTimerSettings({ minutes: Math.max(1, minutes - 1) }));
+  const increaseMinutes = () =>
+    dispatch(setTimerSettings({ minutes: minutes + 1 }));
+
+  const handleIntervalChange = (e) => {
+    dispatch(setTimerSettings({ intervals: e.target.checked ? 2 : 1 }));
+  };
+
+  const handlePauseChange = (e) => {
+    dispatch(setTimerSettings({ pauseBetweenIntervals: e.target.checked }));
+  };
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen px-8 mx-auto max-w-sm sm:max-w-sm md:max-w-md shadow-lg">
@@ -90,7 +108,8 @@ export default function SetTimer() {
           <div>
             <CustomCheckbox
               checked={intervals > 1}
-              onChange={(e) => setIntervals(e.target.checked ? 2 : 1)}
+              onChange={handleIntervalChange}
+              // onChange={(e) => setIntervals(e.target.checked ? 2 : 1)}
               label="Enable intervals"
             />
           </div>
@@ -99,7 +118,8 @@ export default function SetTimer() {
             <div>
               <CustomCheckbox
                 checked={pauseBetweenIntervals}
-                onChange={(e) => setPauseBetweenIntervals(e.target.checked)}
+                onChange={handlePauseChange}
+                // onChange={(e) => setPauseBetweenIntervals(e.target.checked)}
                 label="5 minute break / interval"
               />
             </div>
