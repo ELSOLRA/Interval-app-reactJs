@@ -1,7 +1,7 @@
 import React /* , { useState } */ from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { setTimerSettings } from "../redux/timerSlice";
+import { setTimerSettings, startTimer } from "../redux/timerSlice";
 
 const CustomCheckbox = ({ checked, onChange, label }) => (
   <label className="flex items-center cursor-pointer">
@@ -55,7 +55,7 @@ const ArrowButton = ({ onClick, direction, label }) => (
 export default function SetTimer() {
   // const [minutes, setMinutes] = useState(10);
   const dispatch = useDispatch();
-  const { minutes, intervals, pauseBetweenIntervals } = useSelector(
+  const { minutes, intervalsEnabled, pauseBetweenIntervals } = useSelector(
     (state) => state.timer
   );
   /*   const [intervals, setIntervals] = useState(1);
@@ -64,6 +64,7 @@ export default function SetTimer() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    dispatch(startTimer());
     navigate("/analog");
   };
 
@@ -75,7 +76,7 @@ export default function SetTimer() {
     dispatch(setTimerSettings({ minutes: minutes + 1 }));
 
   const handleIntervalChange = (e) => {
-    dispatch(setTimerSettings({ intervals: e.target.checked ? 2 : 1 }));
+    dispatch(setTimerSettings({ intervalsEnabled: e.target.checked }));
   };
 
   const handlePauseChange = (e) => {
@@ -107,14 +108,14 @@ export default function SetTimer() {
         <div className="flex flex-col gap-6  ">
           <div>
             <CustomCheckbox
-              checked={intervals > 1}
+              checked={intervalsEnabled}
               onChange={handleIntervalChange}
               // onChange={(e) => setIntervals(e.target.checked ? 2 : 1)}
               label="Enable intervals"
             />
           </div>
 
-          {intervals > 1 && (
+          {intervalsEnabled && (
             <div>
               <CustomCheckbox
                 checked={pauseBetweenIntervals}

@@ -1,17 +1,25 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { setTimerSettings } from "../redux/timerSlice";
+import { decrementTimer, resetTimer, startTimer } from "../redux/timerSlice";
 
 export default function AnalogTimer() {
-  const { minutes } = useSelector((state) => state.timer);
-  const [secondsLeft, setSecondsLeft] = useState(minutes * 60);
+  const {
+    minutes,
+    currentMinutes,
+    intervalsEnabled,
+    pauseBetweenIntervals,
+    /*     currentInterval, */
+    isRunning,
+    isBreak,
+  } = useSelector((state) => state.timer);
+  /*   const [secondsLeft, setSecondsLeft] = useState(minutes * 60); */
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
-    const timer = setInterval(() => {
+    /*  const timer = setInterval(() => {
       setSecondsLeft((prev) => {
         if (prev <= 1) {
           clearInterval(timer);
@@ -19,12 +27,53 @@ export default function AnalogTimer() {
         }
         return prev - 1;
       });
+    }, 1000); */
+    /*     dispatch(startTimer()); */
+    const interval = setInterval(() => {
+      if (isRunning) {
+        dispatch(decrementTimer());
+      }
     }, 1000);
 
-    return () => clearInterval(timer);
-  }, []);
+    return () => clearInterval(interval);
+  }, [dispatch, isRunning]);
 
-  const minutesLeft = Math.floor(secondsLeft / 60);
+  useEffect(() => {
+    if (currentMinutes <= 0) {
+      if (!intervalsEnabled) {
+        dispatch(resetTimer());
+        navigate("/set-timer");
+      } else if (pauseBetweenIntervals && !isBreak) {
+        // Start break timer
+        dispatch(startTimer({ isBreak: true, currentMinutes: 5 }));
+        navigate("/break");
+      } else {
+        // Start next interval or continue if no pause
+        dispatch(startTimer({ isBreak: false, currentMinutes: minutes }));
+      }
+    }
+  }, [
+    minutes,
+    currentMinutes,
+    intervalsEnabled,
+    pauseBetweenIntervals,
+    isBreak,
+    dispatch,
+    navigate,
+  ]);
+
+  const handleAbort = () => {
+    dispatch(resetTimer());
+    navigate("/set-timer");
+  };
+
+  const totalSeconds = Math.floor(currentMinutes * 60);
+  const minutesLeft = Math.floor(totalSeconds / 60);
+  const seconds = totalSeconds % 60;
+  const minuteHandRotation = (minutesLeft / 60) * 360;
+  const secondHandRotation = (seconds / 60) * 360;
+
+  /*   const minutesLeft = Math.floor(secondsLeft / 60);
   const seconds = secondsLeft % 60;
 
   const minuteHandRotation = (minutesLeft / 60) * 360;
@@ -33,10 +82,18 @@ export default function AnalogTimer() {
   const handleCancel = () => {
     dispatch(setTimerSettings({ minutes: minutesLeft }));
     navigate("/set-timer");
-  };
+  }; */
 
   return (
     <div className="flex flex-col items-center justify-center h-full">
+      <div className="mt-4 text-center">
+        {/*         <p className="text-2xl font-bold">
+          {Math.floor(currentMinutes)}:
+          {String(Math.floor((currentMinutes % 1) * 60)).padStart(2, "0")}
+        </p> */}
+        {intervalsEnabled && <p className=" text-black">Interval </p>}
+      </div>
+
       <svg viewBox="0 0 100 100" width="300" height="300">
         {/* Clock face */}
         {/*         <circle
@@ -91,9 +148,9 @@ export default function AnalogTimer() {
       </div>
 
       <button
-        onClick={handleCancel}
+        onClick={handleAbort}
         className="mt-4 px-4 hover:bg-slate-300 font-sans text-gray-500 text-2xl font-bold tracking-widest py-3 mx-auto rounded border border-black focus:outline-none focus:shadow-outline transition duration-300 ease-in-out ">
-        Cancel Timer
+        Abort Timer
       </button>
     </div>
   );
