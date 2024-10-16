@@ -1,4 +1,8 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import {
+  /* BrowserRouter, */ HashRouter,
+  Route,
+  Routes,
+} from "react-router-dom";
 import Loading from "./pages/Loading";
 import SetTimerPage from "./pages/setTimerPage";
 import { Provider } from "react-redux";
@@ -10,7 +14,8 @@ import DigitalTimerPage from "./pages/DigitalTimerPage";
 function App() {
   return (
     <Provider store={store}>
-      <BrowserRouter>
+      {/* <BrowserRouter> */}
+      <HashRouter>
         <Routes>
           <Route path="/" element={<Loading />} />
           <Route path="/set-timer" element={<SetTimerPage />} />
@@ -18,7 +23,8 @@ function App() {
           <Route path="/digital" element={<DigitalTimerPage />} />
           <Route path="/break" element={<BreakPage />} />
         </Routes>
-      </BrowserRouter>
+        {/* </BrowserRouter> */}
+      </HashRouter>
     </Provider>
   );
 }
