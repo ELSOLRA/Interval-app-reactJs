@@ -20,7 +20,7 @@ export default function Menu() {
       </button>
 
       {isOpen && (
-        <div className="absolute inset-0 bg-gray-200  z-40 flex items-center justify-center rounded-lg shadow-lg">
+        <div className="absolute inset-0 bg-gray-200  z-40 flex items-center justify-center  shadow-lg">
           <div className="flex flex-col items-center gap-8 w-full font-sans font-bold text-2xl text-gray-400">
             <Link
               to="/analog"
@@ -47,7 +47,7 @@ export default function Menu() {
               Alarm
             </Link>
             <Link
-              to="/pause"
+              to="/break"
               className="block px-4 py-2 hover:bg-white drop-shadow-xl"
               onClick={() => setIsOpen(false)}>
               Pause

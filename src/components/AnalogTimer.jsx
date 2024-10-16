@@ -73,38 +73,13 @@ export default function AnalogTimer() {
   const minuteHandRotation = (minutesLeft / 60) * 360;
   const secondHandRotation = (seconds / 60) * 360;
 
-  /*   const minutesLeft = Math.floor(secondsLeft / 60);
-  const seconds = secondsLeft % 60;
-
-  const minuteHandRotation = (minutesLeft / 60) * 360;
-  const secondHandRotation = (seconds / 60) * 360;
-
-  const handleCancel = () => {
-    dispatch(setTimerSettings({ minutes: minutesLeft }));
-    navigate("/set-timer");
-  }; */
-
   return (
     <div className="flex flex-col items-center justify-center h-full">
       <div className="mt-4 text-center">
-        {/*         <p className="text-2xl font-bold">
-          {Math.floor(currentMinutes)}:
-          {String(Math.floor((currentMinutes % 1) * 60)).padStart(2, "0")}
-        </p> */}
         {intervalsEnabled && <p className=" text-black">Interval </p>}
       </div>
 
       <svg viewBox="0 0 100 100" width="300" height="300">
-        {/* Clock face */}
-        {/*         <circle
-          cx="50"
-          cy="50"
-          r="45"
-          fill="none"
-          stroke="black"
-          strokeWidth="2"
-        /> */}
-
         {/* Hour markers */}
         {[...Array(60)].map((_, i) => (
           <line

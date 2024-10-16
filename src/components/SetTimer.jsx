@@ -51,13 +51,11 @@ const ArrowButton = ({ onClick, direction, label }) => (
 );
 
 export default function SetTimer() {
-  // const [minutes, setMinutes] = useState(10);
   const dispatch = useDispatch();
   const { minutes, intervalsEnabled, pauseBetweenIntervals } = useSelector(
     (state) => state.timer
   );
-  /*   const [intervals, setIntervals] = useState(1);
-  const [pauseBetweenIntervals, setPauseBetweenIntervals] = useState(false); */
+
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
@@ -66,8 +64,6 @@ export default function SetTimer() {
     navigate("/analog");
   };
 
-  /*   const decreaseMinutes = () => setMinutes((prev) => Math.max(1, prev - 1));
-  const increaseMinutes = () => setMinutes((prev) => prev + 1); */
   const decreaseMinutes = () =>
     dispatch(setTimerSettings({ minutes: Math.max(1, minutes - 1) }));
   const increaseMinutes = () =>
@@ -108,7 +104,6 @@ export default function SetTimer() {
             <CustomCheckbox
               checked={intervalsEnabled}
               onChange={handleIntervalChange}
-              // onChange={(e) => setIntervals(e.target.checked ? 2 : 1)}
               label="Enable intervals"
             />
           </div>
@@ -118,7 +113,6 @@ export default function SetTimer() {
               <CustomCheckbox
                 checked={pauseBetweenIntervals}
                 onChange={handlePauseChange}
-                // onChange={(e) => setPauseBetweenIntervals(e.target.checked)}
                 label="5 minute break / interval"
               />
             </div>

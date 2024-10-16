@@ -19,10 +19,7 @@ const timerSlice = createSlice({
 
       return { ...state, ...action.payload };
     },
-    /*     setTimerSettings: (state, action) => {
-      state.minutes = action.payload.minutes;
-      state.secondsLeft = action.payload.minutes * 60;
-    }, */
+
     startTimer: (state, action) => {
       state.isRunning = true;
       if (action.payload) {
@@ -32,12 +29,15 @@ const timerSlice = createSlice({
         state.currentMinutes = state.minutes;
       }
     },
-    pauseTimer: (state) => {
-      state.isRunning = false;
-    },
     startPause: (state) => {
       if (state.currentMinutes > 0) {
         state.currentMinutes -= 1 / 60;
+      }
+    },
+    breakPause: (state) => {
+      state.isBreak = false;
+      if (state.currentMinutes > 0) {
+        state.currentMinutes = 0;
       }
     },
 
@@ -49,16 +49,8 @@ const timerSlice = createSlice({
     decrementTimer: (state) => {
       if (state.currentMinutes > 0) {
         state.currentMinutes -= 1 / 60;
-      } else if (state.intervalsEnabled) {
-        if (state.isBreak) {
-          state.currentMinutes = state.minutes;
-          state.isBreak = false;
-        } else if (state.pauseBetweenIntervals) {
-          // Start break
-          state.currentMinutes = 5;
-          state.isBreak = true;
-        } else {
-          state.currentMinutes = state.minutes;
+        if (state.currentMinutes < 0.01) {
+          state.currentMinutes = 0;
         }
       } else {
         // Timer complete
@@ -74,5 +66,6 @@ export const {
   resetTimer,
   decrementTimer,
   startPause,
+  breakPause,
 } = timerSlice.actions;
 export default timerSlice.reducer;

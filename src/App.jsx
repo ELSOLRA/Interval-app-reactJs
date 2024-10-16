@@ -22,7 +22,7 @@ function App() {
     </Provider>
   );
 }
-
+export default App;
 // other method how to do basname!
 /*     <BrowserRouter basename={import.meta.env.DEV ? "/" : "/timer/"}>
 
@@ -44,4 +44,28 @@ export default defineConfig(({ command }) => {
   return config;
 }); */
 
-export default App;
+//  one more variant
+/*  package.json
+   "scripts": {
+    "dev": "NODE_ENV=development vite",
+    "build": "NODE_ENV=production vite build ",
+    "lint": "eslint .",
+    "preview": "vite preview"
+  },
+  // https://vitejs.dev/config/
+  export default defineConfig({
+    plugins: [react()],
+    base: process.env.NODE_ENV === "production" ? "/Interval-app-reactJs" : "/",
+    });
+  // App
+  <BrowserRouter basename={isProduction()}>
+         
+  function isProduction() {
+            if (import.meta.env.PROD) {
+              return import.meta.env.BASE_URL
+            }
+            else {
+              return ""
+            }
+          }
+  */
