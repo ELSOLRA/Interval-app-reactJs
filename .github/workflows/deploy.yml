@@ -17,6 +17,8 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      VITE_APP_BASE_URL: /Interval-app-reactJs
     steps:
       - uses: actions/checkout@v4
       - name: Install modules
