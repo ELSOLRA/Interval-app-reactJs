@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import menuClose from "../assets/menuclose.svg";
+import menuOpen from "../assets/menu.svg";
 
 export default function Menu() {
   const [isOpen, setIsOpen] = useState(false);
@@ -11,13 +13,9 @@ export default function Menu() {
         onClick={() => setIsOpen(!isOpen)}
         aria-label={isOpen ? "Close menu" : "Open menu"}>
         {isOpen ? (
-          <img
-            src="/src/assets/menuclose.svg"
-            alt="Close Menu"
-            className="w-8 h-8"
-          />
+          <img src={menuClose} alt="Close Menu" className="w-8 h-8" />
         ) : (
-          <img src="/src/assets/menu.svg" alt="Open Menu" className="w-8 h-8" />
+          <img src={menuOpen} alt="Open Menu" className="w-8 h-8" />
         )}
       </button>
 

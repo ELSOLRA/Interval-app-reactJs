@@ -2,6 +2,8 @@ import React /* , { useState } */ from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setTimerSettings, startTimer } from "../redux/timerSlice";
+import checkedbox from "../assets/checkedbox.svg";
+import uncheckedbox from "../assets/uncheckedbox.svg";
 
 const CustomCheckbox = ({ checked, onChange, label }) => (
   <label className="flex items-center cursor-pointer">
@@ -14,11 +16,7 @@ const CustomCheckbox = ({ checked, onChange, label }) => (
       />
       <div className="w-6 h-6">
         <img
-          src={
-            checked
-              ? "/src/assets/checkedbox.svg"
-              : "/src/assets/uncheckedbox.svg"
-          }
+          src={checked ? { checkedbox } : { uncheckedbox }}
           alt={checked ? "Checked" : "Unchecked"}
           className="w-full h-full"
         />
