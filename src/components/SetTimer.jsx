@@ -16,7 +16,7 @@ const CustomCheckbox = ({ checked, onChange, label }) => (
       />
       <div className="w-6 h-6">
         <img
-          src={checked ? { checkedbox } : { uncheckedbox }}
+          src={checked ? checkedbox : uncheckedbox}
           alt={checked ? "Checked" : "Unchecked"}
           className="w-full h-full"
         />
